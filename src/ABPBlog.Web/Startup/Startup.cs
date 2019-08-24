@@ -3,6 +3,8 @@ using Abp.AspNetCore;
 using Abp.Castle.Logging.Log4Net;
 using Abp.EntityFrameworkCore;
 using ABPBlog.EntityFrameworkCore;
+using ABPBlog.Web.Filter;
+using ABPBlog.Web.Middleware;
 using Castle.Facilities.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,10 +23,15 @@ namespace ABPBlog.Web.Startup
             {
                 DbContextOptionsConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
             });
-
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+            });
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                options.Filters.Add(new SessionFilter());
             });
             services.AddMemoryCache();
             //Configure Abp and Dependency Injection
@@ -40,7 +47,7 @@ namespace ABPBlog.Web.Startup
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseAbp(); //Initializes ABP framework.
-
+            app.UseRequestIPMiddleware();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
