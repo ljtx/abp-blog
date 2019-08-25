@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Text;
 
 namespace ABPBlog.Web.Controllers
 {
@@ -31,7 +32,29 @@ namespace ABPBlog.Web.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
+        public bool IsSignedIn()
+        {
+            string str = HttpContext.Session.GetString("abpblogsession");
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return false;
+            }
+            return true;
+        }
+        public User GetUserByName(string userName)
+        {
+           return  _userService.GetUserByName(userName);
+        }
+        public string GetCurrentUserName()
+        {
+            string str = HttpContext.Session.GetString("abpblogsession");
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return "ljtx";
+            }
+            str= CompressHelper.AES_Decrypt(str, "qwertyuiop", "1234567891234567");
+            return str;
+        }
         //
         // POST: /Account/Login
         [HttpPost]
@@ -46,7 +69,7 @@ namespace ABPBlog.Web.Controllers
             var result = _userService.SignIn(model.UserName,model.Password);
             if (result!=null)
             {
-                HttpContext.Session.SetString("abpblogsession", MD5.ToMD5String(model.UserName, "session"));
+                HttpContext.Session.SetString("abpblogsession", CompressHelper.AES_Encrypt(model.UserName, "qwertyuiop","1234567891234567"));
                 Logger.InfoFormat("Logged in {userName}.", model.UserName);
                 return RedirectToLocal(returnUrl);
             }

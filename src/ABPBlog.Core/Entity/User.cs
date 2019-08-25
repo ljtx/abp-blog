@@ -4,9 +4,9 @@ namespace ABPBlog.Entity
 {
     public class User:Entity<int>
     {
-       
         public string UserName { get; set; }
         public string PassWord { get; set; }
+        public string Email { get; set; }
         public string Avatar { get; set; }
         public string Profile { get; set; }
         public string Url { get; set; }

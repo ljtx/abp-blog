@@ -12,6 +12,7 @@ namespace ABPBlog.EntityFrameworkCore
             /* This is the single point to configure DbContextOptions for ABPBlogDbContext */
             // dbContextOptions.UseSqlServer(connectionString);dbContextOptions
             dbContextOptions.UseMySQL(connectionString);
+            dbContextOptions.UseMySQL(CompressHelper.AES_Decrypt(connectionString, "qwertyuiop", "1234567891234567"));
         }
     }
 }

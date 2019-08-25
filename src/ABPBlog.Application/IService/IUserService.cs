@@ -11,5 +11,6 @@ namespace ABPBlog.IService
     {
          User SignIn(string userName, string passWord);
          Task<bool> CreateAsync(User user);
+         User GetUserByName(string userName);
     }
 }

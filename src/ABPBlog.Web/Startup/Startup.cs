@@ -31,7 +31,7 @@ namespace ABPBlog.Web.Startup
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                options.Filters.Add(new SessionFilter());
+                //options.Filters.Add(new SessionFilter());
             });
             services.AddMemoryCache();
             //Configure Abp and Dependency Injection

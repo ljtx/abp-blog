@@ -16,7 +16,10 @@ namespace ABPBlog
         {
             _userRepository = userRepository;
         }
-
+        public User GetUserByName(string userName)
+        {
+            return _userRepository.GetAll().FirstOrDefault(o => o.UserName == userName);
+        }
         public User SignIn(string userName,string passWord)
         {
             var users =_userRepository.GetAll();
