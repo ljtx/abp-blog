@@ -19,15 +19,16 @@ namespace ABPBlog.EntityFrameworkCore
         public DbSet<UserMessage> UserMessages { get; set; }
         public DbSet<UserCollection> UserTopics { get; set; }
         public DbSet<User> User { get; set; }
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-        //    modelBuilder.Entity<Topic>().ToTable("Topic");
-        //    modelBuilder.Entity<TopicReply>().ToTable("TopicReply");
-        //    modelBuilder.Entity<TopicNode>().ToTable("TopicNode");
-        //    modelBuilder.Entity<User>().ToTable("User");
-        //    modelBuilder.Entity<UserMessage>().ToTable("UserMessage");
-        //    modelBuilder.Entity<UserCollection>().ToTable("UserCollection");
-        //}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Topic>().ToTable("Topic");
+            modelBuilder.Entity<TopicReply>().ToTable("TopicReply");
+            modelBuilder.Entity<TopicNode>().ToTable("TopicNode");
+            modelBuilder.Entity<User>().ToTable("User");
+            modelBuilder.Entity<UserMessage>().ToTable("UserMessage");
+            modelBuilder.Entity<UserCollection>().ToTable("UserCollection");
+        }
     }
 }
