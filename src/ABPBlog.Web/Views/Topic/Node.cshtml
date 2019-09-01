@@ -3,7 +3,7 @@
 @inject ABPBlog.Web.Controllers.AccountController services
 @{
     var node = ViewBag.Node as TopicNode;
-    ViewData["Title"] = node.Name + "-.NET Core 跨平台论坛";
+    ViewData["Title"] = node.Name + "-ABP-Blog";
     var list = ViewBag.Topics as List<ABPBlog.Web.ViewModel.TopicViewModel>;
     var user =  services.GetUserByName(services.GetCurrentUserName());
 }

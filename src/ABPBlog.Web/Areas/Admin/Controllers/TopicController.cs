@@ -12,7 +12,7 @@ namespace ABPBlog.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize("Admin")]
-    public class TopicController: ABPBlogControllerBase
+    public class TopicController: ABPBlogAdminBaseController
     {
 
         private IRepository<Topic> _topicRepository;
