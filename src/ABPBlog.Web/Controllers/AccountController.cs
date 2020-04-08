@@ -34,12 +34,17 @@ namespace ABPBlog.Web.Controllers
         }
         public bool IsSignedIn()
         {
-            string str = HttpContext.Session.GetString("abpblogsession");
-            if (string.IsNullOrWhiteSpace(str))
-            {
-                return false;
-            }
-            return true;
+            //var session = HttpContext.Session;
+            //if (session != null)
+            //{
+            //    string str = session.GetString("abpblogsession");
+            //    if (string.IsNullOrWhiteSpace(str))
+            //    {
+            //        return false;
+            //    }
+            //    return true;
+            //}
+            return false;
         }
         public User GetUserByName(string userName)
         {
@@ -66,7 +71,7 @@ namespace ABPBlog.Web.Controllers
                 return View(model);
             }
 
-            var result = _userService.SignIn(model.UserName,model.Password);
+            var result = _userService.SignIn(model.UserName,MD5.ToMD5String(model.Password,"ljtx"));
             if (result!=null)
             {
                 HttpContext.Session.SetString("abpblogsession", CompressHelper.AES_Encrypt(model.UserName, "qwertyuiop","1234567891234567"));

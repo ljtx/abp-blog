@@ -34,6 +34,15 @@ namespace ABPBlog.Web.Startup
                 //options.Filters.Add(new SessionFilter());
             });
             services.AddMemoryCache();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "Admin",
+                    authBuilder =>
+                    {
+                        authBuilder.RequireClaim("Admin", "Allowed");
+                    });
+            });
             //Configure Abp and Dependency Injection
             return services.AddAbp<ABPBlogWebModule>(options =>
             {

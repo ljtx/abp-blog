@@ -17,12 +17,17 @@ namespace ABPBlog.Web.Filter
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            var result = context.HttpContext.Session.GetString("abpblogsession");
-            if (result == null)
+            var session = context.HttpContext.Session;
+            if (session != null)
             {
-                context.Result = new RedirectResult("/Account/Login");
-                return;
+                var result = session.GetString("abpblogsession");
+                if (result == null)
+                {
+                    context.Result = new RedirectResult("/Account/Login");
+                    return;
+                }
             }
+            
         }
     }
 }
