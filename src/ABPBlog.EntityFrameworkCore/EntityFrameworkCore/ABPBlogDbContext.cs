@@ -11,7 +11,7 @@ namespace ABPBlog.EntityFrameworkCore
         public DbSet<TopicReply> TopicReplys { get; set; }
         public DbSet<TopicNode> TopicNodes { get; set; }
         public DbSet<UserMessage> UserMessages { get; set; }
-        public DbSet<UserCollection> UserTopics { get; set; }
+        public DbSet<UserCollection> UserCollection { get; set; }
         public DbSet<User> User { get; set; }
         public ABPBlogDbContext(DbContextOptions<ABPBlogDbContext> options) 
             : base(options)

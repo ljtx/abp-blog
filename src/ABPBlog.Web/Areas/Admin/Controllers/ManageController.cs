@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace ABPBlog.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize("Admin")]
     public class ManageController : ABPBlogAdminBaseController
     {
         private IRepository<User> _userRepository;

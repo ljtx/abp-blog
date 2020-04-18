@@ -14,11 +14,13 @@ namespace ABPBlog.Web.Controllers
     {
         private ITopicRepository _topicRepository;
         private IRepository<TopicNode> _topicNodeRepository;
+        private IRepository<User> _userRepository;
 
-        public HomeController(ITopicRepository topicRepository, IRepository<TopicNode> topicNodeRepository)
+        public HomeController(ITopicRepository topicRepository, IRepository<TopicNode> topicNodeRepository, IRepository<User> userRepository)
         {
             _topicRepository = topicRepository;
             _topicNodeRepository = topicNodeRepository;
+            _userRepository = userRepository;
         }
         public ActionResult Index(string i)
         {
@@ -36,7 +38,8 @@ namespace ABPBlog.Web.Controllers
                 Id = r.Id,
                 NodeId = r.Node.Id,
                 NodeName = r.Node.Name,
-              //  UserName = r.User.UserName,
+                //UserName = r.User.UserName,
+                UserName = "ljtx",
                 Avatar = r.User.Avatar,
                 Title = r.Title,
                 Top = r.Top,
@@ -47,7 +50,8 @@ namespace ABPBlog.Web.Controllers
             }).ToList();
             ViewBag.PageIndex = pageindex;
             ViewBag.PageCount = result.GetPageCount();
-            //ViewBag.User = userServices.User.Result;
+            //todoÔÝÊ±Ð´ËÀµÄ
+            ViewBag.User = _userRepository.Get(1);
             var nodes = _topicNodeRepository.GetAll().ToList();
             ViewBag.Nodes = nodes;
             ViewBag.NodeListItem = nodes.Where(r => r.ParentId != 0).Select(r => new SelectListItem { Value = r.Id.ToString(), Text = r.Name });

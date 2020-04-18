@@ -35,6 +35,7 @@ namespace ABPBlog
             topics = topics.OrderByDescending(r => r.CreateOn)
                     .OrderByDescending(r => r.Top)
                     .Skip((pageindex - 1) * pagesize).Take(pagesize);
+            var s = topics.ToList();
             return new Page<Topic>(topics.ToList(), pagesize, count);
         }
     }

@@ -12,7 +12,13 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\css\dashboard.css" />
+    <Content Remove="wwwroot\css\site.css" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="app.config" />
+    <None Include="wwwroot\css\dashboard.css" />
+    <None Include="wwwroot\css\site.css" />
     <None Update="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

@@ -22,8 +22,7 @@ namespace ABPBlog.Web.Controllers
             _nodeRepository = node;
             _replyRepository = reply;
         }
-        // GET: /Topic/1
-        [Route("/Topic/{id}")]
+
         public IActionResult Index(int id)
         {
             if (id <= 0) return Redirect("/");

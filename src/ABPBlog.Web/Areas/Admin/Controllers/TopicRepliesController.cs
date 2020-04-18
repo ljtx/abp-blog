@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ABPBlog.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize("Admin")]
+    //[Authorize("Admin")]
     public class TopicRepliesController: ABPBlogAdminBaseController
     {
         private IRepository<TopicReply> _topicReplyRepository;
