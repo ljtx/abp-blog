@@ -34,6 +34,7 @@ namespace ABPBlog.Web.Startup
                 //options.Filters.Add(new SessionFilter());
             });
             services.AddMemoryCache();
+            services.AddHttpContextAccessor();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(

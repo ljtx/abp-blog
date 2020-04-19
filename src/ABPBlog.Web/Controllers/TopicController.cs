@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ABPBlog.Web.Controllers
 {
@@ -15,19 +15,24 @@ namespace ABPBlog.Web.Controllers
         private ITopicRepository _topicRepository;
         private IRepository<TopicNode> _nodeRepository;
         private IRepository<TopicReply> _replyRepository;
+        private IRepository<User> _userRepository;
 
-        public TopicController(ITopicRepository topic, IRepository<TopicNode> node, IRepository<TopicReply> reply)
+        public TopicController(ITopicRepository topic, IRepository<TopicNode> node, IRepository<TopicReply> reply, IRepository<User> userRepository)
         {
             _topicRepository = topic;
             _nodeRepository = node;
             _replyRepository = reply;
+            _userRepository = userRepository;
         }
-
+        [Route("/Topic/{id}")]
         public IActionResult Index(int id)
         {
             if (id <= 0) return Redirect("/");
             var topic = _topicRepository.Get(id);
             if (topic == null) return Redirect("/");
+            topic.Node = _nodeRepository.Get(topic.NodeId);
+            //todo暂时写死
+            topic.User = _userRepository.Get(1);
             var replys = _replyRepository.GetAllList(r => r.TopicId == id);
             topic.ViewCount += 1;
             _topicRepository.Update(topic);
@@ -74,7 +79,7 @@ namespace ABPBlog.Web.Controllers
                 NodeId = r.Node.Id,
                 NodeName = r.Node.Name,
                 //UserName = r.User.UserName,
-                Avatar = r.User.Avatar,
+                //Avatar = r.User.Avatar,
                 Title = r.Title,
                 Top = r.Top,
                 Type = r.Type,

@@ -19,10 +19,13 @@ namespace ABPBlog.Web.Controllers
 
         private IRepository<User> _userRepository;
         private IUserService _userService;
-        public AccountController(IRepository<User> userRepository, IUserService userService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
+        public AccountController(IRepository<User> userRepository, IUserService userService, IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
             _userService = userService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         //
@@ -52,7 +55,7 @@ namespace ABPBlog.Web.Controllers
         }
         public string GetCurrentUserName()
         {
-            string str = HttpContext.Session.GetString("abpblogsession");
+            string str = _session.GetString("abpblogsession");
             if (string.IsNullOrWhiteSpace(str))
             {
                 return "ljtx";

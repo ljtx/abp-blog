@@ -41,7 +41,7 @@ namespace ABPBlog.Web.Areas.Admin.Controllers
             try
             {
                 node.CreateOn = DateTime.Now;
-                _topicNodeRepository.Update(node);
+                _topicNodeRepository.Insert(node);
                 return RedirectToAction("Index");
             }
             catch

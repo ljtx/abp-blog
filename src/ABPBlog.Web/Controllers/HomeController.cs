@@ -40,7 +40,7 @@ namespace ABPBlog.Web.Controllers
                 NodeName = r.Node.Name,
                 //UserName = r.User.UserName,
                 UserName = "ljtx",
-                Avatar = r.User.Avatar,
+               // Avatar = r.User.Avatar,
                 Title = r.Title,
                 Top = r.Top,
                 Type = r.Type,
@@ -51,7 +51,7 @@ namespace ABPBlog.Web.Controllers
             ViewBag.PageIndex = pageindex;
             ViewBag.PageCount = result.GetPageCount();
             //todoÔÝÊ±Ð´ËÀµÄ
-            ViewBag.User = _userRepository.Get(1);
+             ViewBag.User = _userRepository.Get(1);
             var nodes = _topicNodeRepository.GetAll().ToList();
             ViewBag.Nodes = nodes;
             ViewBag.NodeListItem = nodes.Where(r => r.ParentId != 0).Select(r => new SelectListItem { Value = r.Id.ToString(), Text = r.Name });
