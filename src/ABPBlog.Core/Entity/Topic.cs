@@ -9,7 +9,7 @@ namespace ABPBlog.Entity
     {
         public int NodeId { get; set; }
         public TopicNode Node { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
         public string Email { get; set; }
         public string Title { get; set; }
@@ -21,7 +21,7 @@ namespace ABPBlog.Entity
         public TopicType Type { get; set; }
         public int ViewCount { get; set; }
         public int ReplyCount { get; set; }
-        public string LastReplyUserId { get; set; }
+        public int LastReplyUserId { get; set; }
         public User LastReplyUser { get; set; }
         public DateTime LastReplyTime { get; set; }
         public DateTime CreateOn { get; set; }

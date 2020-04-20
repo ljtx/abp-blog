@@ -1,8 +1,10 @@
 using Abp.Domain.Repositories;
 using ABPBlog.Entity;
 using ABPBlog.IRepository;
+using ABPBlog.IService;
 using ABPBlog.Web.ViewModel;
 using Castle.Core.Logging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -15,12 +17,15 @@ namespace ABPBlog.Web.Controllers
         private ITopicRepository _topicRepository;
         private IRepository<TopicNode> _topicNodeRepository;
         private IRepository<User> _userRepository;
-
-        public HomeController(ITopicRepository topicRepository, IRepository<TopicNode> topicNodeRepository, IRepository<User> userRepository)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private IUserService _userService;
+        public HomeController(ITopicRepository topicRepository, IRepository<TopicNode> topicNodeRepository, IRepository<User> userRepository, IHttpContextAccessor httpContextAccessor, IUserService userService)
         {
             _topicRepository = topicRepository;
             _topicNodeRepository = topicNodeRepository;
             _userRepository = userRepository;
+            _httpContextAccessor = httpContextAccessor;
+            _userService = userService;
         }
         public ActionResult Index(string i)
         {
@@ -38,8 +43,7 @@ namespace ABPBlog.Web.Controllers
                 Id = r.Id,
                 NodeId = r.Node.Id,
                 NodeName = r.Node.Name,
-                //UserName = r.User.UserName,
-                UserName = "ljtx",
+                UserName = r.User.UserName,
                // Avatar = r.User.Avatar,
                 Title = r.Title,
                 Top = r.Top,
@@ -50,12 +54,22 @@ namespace ABPBlog.Web.Controllers
             }).ToList();
             ViewBag.PageIndex = pageindex;
             ViewBag.PageCount = result.GetPageCount();
-            //todo暂时写死的
-             ViewBag.User = _userRepository.Get(1);
+            //todo: 暂时写死的
+             ViewBag.User = GetCurrentUser();
             var nodes = _topicNodeRepository.GetAll().ToList();
             ViewBag.Nodes = nodes;
             ViewBag.NodeListItem = nodes.Where(r => r.ParentId != 0).Select(r => new SelectListItem { Value = r.Id.ToString(), Text = r.Name });
             return View();
+        }
+        private User GetCurrentUser()
+        {
+            string str = _httpContextAccessor.HttpContext.Session.GetString("abpblogsession");
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+                str = CompressHelper.AES_Decrypt(str, "qwertyuiop", "1234567891234567");
+                return _userService.GetUserByName(str);
+            }
+            return null;
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

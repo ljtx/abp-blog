@@ -31,8 +31,7 @@ namespace ABPBlog.Web.Controllers
             var topic = _topicRepository.Get(id);
             if (topic == null) return Redirect("/");
             topic.Node = _nodeRepository.Get(topic.NodeId);
-            //todo暂时写死
-            topic.User = _userRepository.Get(1);
+            topic.User = _userRepository.Get(topic.UserId);
             var replys = _replyRepository.GetAllList(r => r.TopicId == id);
             topic.ViewCount += 1;
             _topicRepository.Update(topic);
