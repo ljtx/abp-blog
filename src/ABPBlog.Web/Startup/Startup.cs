@@ -69,6 +69,7 @@ namespace ABPBlog.Web.Startup
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseSession();
             app.UseMvc(routes =>
             {

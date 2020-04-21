@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ABPBlog.Web.Areas.Admin.Controllers
 {
     [SessionFilter]
+    [AdminFilter]
     public class ABPBlogAdminBaseController : ABPBlogControllerBase
     {
         
